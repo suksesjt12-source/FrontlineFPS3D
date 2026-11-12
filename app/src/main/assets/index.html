@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>Frontline FPS 3D</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    background: #101820;
+    font-family: Arial;
+    touch-action: none;
+}
+
+canvas {
+    display: block;
+}
+
+#hud {
+    position: absolute;
+    inset: 0;
+    color: white;
+    pointer-events: none;
+}
+
+#info {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 15px;
+}
+
+#ammo {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 19px;
+}
+
+#crosshair {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 28px;
+}
+
+#health {
+    width: 130px;
+    height: 9px;
+    background: #444;
+    margin-top: 8px;
+}
+
+#healthFill {
+    height: 100%;
+    width: 100%;
+    background: #21df85;
+}
+
+#controls {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.pad {
+    position: absolute;
+    bottom: 25px;
+    width: 125px;
+    height: 125px;
+    border: 2px solid #ffffff70;
+    background: #ffffff18;
+    border-radius: 50%;
+    pointer-events: auto;
+}
+
+#move {
+    left: 25px;
+}
+
+#look {
+    right: 25px;
+}
+
+.stick {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    left: 38px;
+    top: 38px;
+    border-radius: 50%;
+    background: #ffffff90;
+}
+
+#fire {
+    position: absolute;
+    right: 40px;
+    bottom: 175px;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: #d52c36;
+    color: white;
+    font-weight: bold;
+    border: 2px solid white;
+    pointer-events: auto;
+}
+
+#reload {
+    position: absolute;
+    right: 125px;
+    bottom: 30px;
+    padding: 14px;
+    background: #253c50;
+    color: white;
+    border: 1px solid white;
+    border-radius: 8px;
+    pointer-events: auto;
+}
+
+#start {
+    position: absolute;
+    inset: 0;
+    background: #101820;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 5;
+}
+
+#start button {
+    padding: 15px 35px;
+    background: #20b77e;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="hud">
+
+    <div id="info">
+        FRONTLINE FPS 3D
+        <div id="wave">WAVE 1</div>
+
+        HP
+        <div id="health">
+            <div id="healthFill"></div>
+        </div>
+    </div>
+
+    <div id="ammo">30 / 120</div>
+
+    <div id="crosshair">+</div>
+
+</div>
+
+<div id="controls">
+
+    <div class="pad" id="move">
+        <div class="stick"></div>
+    </div>
+
+    <div class="pad" id="look">
+        <div class="stick"></div>
+    </div>
+
+    <button id="fire">FIRE</button>
+
+    <button id="reload">RELOAD</button>
+
+</div>
+
+<div id="start">
+    <div>
+        <h1>FRONTLINE FPS 3D</h1>
+        <p>3D First Person Shooter</p>
+        <p>Survive the enemy waves.</p>
+        <button id="play">START GAME</button>
+    </div>
+</div>
+
+<script type="module" src="./game.js"></script>
+
+</body>
+</html>
