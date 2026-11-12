@@ -1,202 +1,92 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Frontline FPS 3D</title>
-
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    overflow: hidden;
-    background: #101820;
-    font-family: Arial;
-    touch-action: none;
-}
-
-canvas {
-    display: block;
-}
-
-#hud {
-    position: absolute;
-    inset: 0;
-    color: white;
-    pointer-events: none;
-}
-
-#info {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 15px;
-}
-
-#ammo {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 19px;
-}
-
-#crosshair {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    font-size: 28px;
-}
-
-#health {
-    width: 130px;
-    height: 9px;
-    background: #444;
-    margin-top: 8px;
-}
-
-#healthFill {
-    height: 100%;
-    width: 100%;
-    background: #21df85;
-}
-
-#controls {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-.pad {
-    position: absolute;
-    bottom: 25px;
-    width: 125px;
-    height: 125px;
-    border: 2px solid #ffffff70;
-    background: #ffffff18;
-    border-radius: 50%;
-    pointer-events: auto;
-}
-
-#move {
-    left: 25px;
-}
-
-#look {
-    right: 25px;
-}
-
-.stick {
-    width: 45px;
-    height: 45px;
-    position: absolute;
-    left: 38px;
-    top: 38px;
-    border-radius: 50%;
-    background: #ffffff90;
-}
-
-#fire {
-    position: absolute;
-    right: 40px;
-    bottom: 175px;
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    background: #d52c36;
-    color: white;
-    font-weight: bold;
-    border: 2px solid white;
-    pointer-events: auto;
-}
-
-#reload {
-    position: absolute;
-    right: 125px;
-    bottom: 30px;
-    padding: 14px;
-    background: #253c50;
-    color: white;
-    border: 1px solid white;
-    border-radius: 8px;
-    pointer-events: auto;
-}
-
-#start {
-    position: absolute;
-    inset: 0;
-    background: #101820;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 5;
-}
-
-#start button {
-    padding: 15px 35px;
-    background: #20b77e;
-    border: 0;
-    color: white;
-    font-weight: bold;
-    margin-top: 20px;
-}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101820;color:white;font-family:Arial,sans-serif;touch-action:none}
+#game{position:absolute;inset:0}
+canvas{display:block;width:100%;height:100%}
+#cover{position:absolute;inset:0;z-index:10;background:linear-gradient(#10182055,#101820ee),linear-gradient(135deg,#263d45,#111923);display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+.coverbox{width:min(520px,100%);padding:20px;background:#101820dd;border:1px solid #71858b;border-radius:16px}
+.coverbox svg{width:100%;max-height:230px}
+h1{font-size:32px;letter-spacing:2px;margin:12px 0 5px}
+.sub{color:#c5d1d3;letter-spacing:3px;font-size:12px}
+button{border:0;border-radius:10px;padding:13px 22px;background:#e0a52c;color:#171717;font-weight:bold;font-size:16px}
+#start{margin-top:22px;width:80%}
+#hud{position:absolute;z-index:3;top:12px;left:12px;right:12px;display:none;pointer-events:none;text-shadow:1px 2px 3px black;font-weight:bold}
+.hudrow{display:flex;justify-content:space-between;gap:8px}
+.huditem{background:#101820bb;padding:8px 11px;border-radius:8px}
+#message{position:absolute;z-index:4;top:23%;width:100%;text-align:center;font-size:22px;font-weight:bold;text-shadow:2px 2px 4px black;pointer-events:none}
+#controls{display:none;position:absolute;inset:0;z-index:5;pointer-events:none}
+#moveZone{position:absolute;left:15px;bottom:25px;width:135px;height:135px;border-radius:50%;background:#ffffff22;border:2px solid #ffffff66;pointer-events:auto;touch-action:none}
+#stick{position:absolute;width:55px;height:55px;left:38px;top:38px;border-radius:50%;background:#ffffff88;border:2px solid white}
+#lookZone{position:absolute;right:0;top:22%;width:55%;height:60%;pointer-events:auto;touch-action:none}
+.action{position:absolute;right:20px;bottom:30px;width:75px;height:75px;border-radius:50%;pointer-events:auto;padding:0;background:#c94b35;color:white;border:2px solid #fff;font-size:13px}
+#reload{right:108px;bottom:45px;width:65px;height:65px;background:#d5a23c;color:#111}
+#crosshair{position:absolute;z-index:2;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);display:none;pointer-events:none}
+#crosshair:before,#crosshair:after{content:"";position:absolute;background:white;box-shadow:0 0 3px black}
+#crosshair:before{width:2px;height:18px;left:8px}
+#crosshair:after{height:2px;width:18px;top:8px}
+#end{display:none;position:absolute;z-index:9;inset:0;background:#000c;align-items:center;justify-content:center;text-align:center;padding:20px}
+#endbox{background:#17232c;padding:28px;border-radius:14px;min-width:260px}
+#end button{margin-top:15px}
 </style>
 </head>
-
 <body>
+<div id="game"></div>
+
+<div id="cover">
+ <div class="coverbox">
+  <svg viewBox="0 0 700 300" role="img" aria-label="Ilustrasi markas pertahanan">
+   <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#253d51"/><stop offset="1" stop-color="#c0783c"/></linearGradient>
+   </defs>
+   <rect width="700" height="300" fill="url(#sky)"/>
+   <circle cx="540" cy="85" r="42" fill="#f5c16b"/>
+   <path d="M0 210 L130 125 230 200 340 115 470 205 580 130 700 210 V300 H0Z" fill="#263c3b"/>
+   <path d="M0 245 L150 195 270 240 410 180 550 240 700 190 V300 H0Z" fill="#172c2c"/>
+   <rect x="235" y="150" width="230" height="100" fill="#35464a"/>
+   <rect x="265" y="125" width="170" height="30" fill="#536166"/>
+   <rect x="290" y="180" width="42" height="70" fill="#172126"/>
+   <rect x="365" y="180" width="42" height="70" fill="#172126"/>
+   <path d="M200 250 H500 V270 H200Z" fill="#111b20"/>
+   <path d="M80 300 L250 240 450 240 620 300Z" fill="#425044"/>
+   <g fill="#111b20"><path d="M80 230 l25 -80 25 80z"/><path d="M570 230 l25 -80 25 80z"/></g>
+   <text x="350" y="285" fill="white" text-anchor="middle" font-size="16" letter-spacing="5">OUTPOST 07</text>
+  </svg>
+  <div class="sub">TACTICAL SURVIVAL</div>
+  <h1>FRONTLINE FPS 3D</h1>
+  <p>Bertahan dari gelombang musuh.</p>
+  <button id="start">MULAI PERMAINAN</button>
+ </div>
+</div>
 
 <div id="hud">
-
-    <div id="info">
-        FRONTLINE FPS 3D
-        <div id="wave">WAVE 1</div>
-
-        HP
-        <div id="health">
-            <div id="healthFill"></div>
-        </div>
-    </div>
-
-    <div id="ammo">30 / 120</div>
-
-    <div id="crosshair">+</div>
-
+ <div class="hudrow">
+  <div class="huditem">HP: <span id="hp">100</span></div>
+  <div class="huditem">SKOR: <span id="score">0</span></div>
+  <div class="huditem">WAVE: <span id="wave">1</span></div>
+  <div class="huditem">AMMO: <span id="ammo">12/12</span></div>
+ </div>
 </div>
-
+<div id="crosshair"></div>
+<div id="message"></div>
 <div id="controls">
-
-    <div class="pad" id="move">
-        <div class="stick"></div>
-    </div>
-
-    <div class="pad" id="look">
-        <div class="stick"></div>
-    </div>
-
-    <button id="fire">FIRE</button>
-
-    <button id="reload">RELOAD</button>
-
+ <div id="moveZone"><div id="stick"></div></div>
+ <div id="lookZone"></div>
+ <button class="action" id="fire">TEMBAK</button>
+ <button class="action" id="reload">ISI</button>
 </div>
+<div id="end"><div id="endbox">
+ <h1>GAME OVER</h1>
+ <p>Skor akhir: <span id="finalScore">0</span></p>
+ <button id="retry">MAIN LAGI</button>
+</div></div>
 
-<div id="start">
-    <div>
-        <h1>FRONTLINE FPS 3D</h1>
-        <p>3D First Person Shooter</p>
-        <p>Survive the enemy waves.</p>
-        <button id="play">START GAME</button>
-    </div>
-</div>
-
-<script type="module" src="./game.js"></script>
-
+<script src="./game.bundle.js"></script>
 </body>
 </html>
